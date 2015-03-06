@@ -1,0 +1,25 @@
+<%= form_for @store.location, :html => { multipart: true, :class => "form-horizontal store" } do |f| %>
+  <div class="control-group">
+    <%= f.label :address, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :address %>
+    </div>
+    <%= error_span(@store.location[:address]) %>
+  </div>
+  
+  <div class="control-group">
+    <%= f.label :latitude, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :latitude, :class => 'form-control' %>
+    </div>
+    <%= error_span(@store.location[:latitude]) %>
+  </div>
+  
+  <div class="control-group">
+    <%= f.label :longitude, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :longitude, :class => 'form-control' %>
+    </div>
+    <%= error_span(@store[:longitude]) %>
+  </div>
+<% end %>

@@ -1,0 +1,63 @@
+<%= form_for @store, :html => { multipart: true, :class => "form-horizontal store" } do |f| %>
+
+    <% if @store.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@store.errors.count, "error") %> prohibited this store from being saved:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @store.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="control-group">
+    <%= f.label :name, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :name, :class => 'form-control' %>
+    </div>
+    <%= error_span(@store[:name]) %>
+  </div>
+  
+  <div class="control-group">
+      <%= f.label :phone_number, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :phone_number, :class => 'form-control' %>
+    </div>
+    <%= error_span(@store[:phone_number]) %>
+  </div>
+  
+  <div class="control-group">
+    <%= f.label "Web URL", :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :web_address, :class => 'form-control' %>
+    </div>
+    <%= error_span(@store[:web_address]) %>
+  </div>  
+  
+  <div class="control-group">
+    <%= f.label :description, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_area :description, :class => 'form-control' %>
+    </div>
+    <%= error_span(@store[:description]) %>
+  </div>
+  
+  <div class="control-group">
+    <%= f.label :picture %>
+    <div class="controls">
+      <%= f.file_field :picture %>
+    </div>
+    <%= error_span(@store[:picture]) %>
+  </div>
+
+<br />
+  <%= f.submit nil, :class => 'btn btn-primary' %>
+  <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+            stores_path, :class => 'btn btn-default' %>
+
+<% end %>

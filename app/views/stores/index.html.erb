@@ -1,0 +1,62 @@
+<!-- If search then show user the count -->
+<% if params[:search] and @stores.count(:name) > 0 %>
+  <p class="text-primary"><%= 'Search found ' + pluralize(@stores.count(:name), 'result') + ':' %></p>
+<% elsif @stores.count(:name) < 1 %>
+  <p class="text-warning">No results found. Perhaps try another keyword?</p>
+<% end %>
+
+<%- model_class = Store -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:name) %></th>
+      <th><%= model_class.human_attribute_name(:description) %></th>
+      <!-- <th><%= model_class.human_attribute_name(:created_at) %></th> -->
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @stores.each do |store| %>
+      <tr>
+        <td><%= link_to store.name, store_path(store) %></td>
+        <td class="visible-lg visible-md">
+          <% if store.description.length > 200 %>
+            <%= store.description[0,200] + "..." %>
+            <%= link_to "[more details]", store_path(store) %>
+          <% else %>
+            <%= store.description %>
+            <%= link_to "[more details]", store_path(store) %>
+          <% end %>
+        </td>
+
+        <td class="visible-sm visible-xs">
+          <% if store.description.length > 100 %>
+            <%= store.description[0,100] + "..." %>
+            <%= link_to "[more details]", store_path(store) %>
+          <% else %>
+            <%= store.description %>
+            <%= link_to "[more details]", store_path(store) %>
+          <% end %>
+        </td>
+        <!-- <td><%=l store.created_at %></td> -->
+        <td>
+          <!-- start buttons -->
+          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                      edit_store_path(store), :class => 'btn btn-default btn-xs' %>
+          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                      store_path(store),
+                      :method => :delete,
+                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                      :class => 'btn btn-xs btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_store_path,
+            :class => 'btn btn-primary' %>
